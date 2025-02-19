@@ -1,12 +1,45 @@
 {
   "name": "baize-template",
-  "version": "1.0.0",
+  "displayName": "baize-template",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "publisher": "xiaoyu9603",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "icon": "icon.png",
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "url": "https://github.com/sulgweb/baize-template"
+  },
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.openWebview",
+        "title": "baize:vsc-extension"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "client-dev":"cd client && pnpm run dev",
+    "client-build":"cd client && pnpm run build",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "typescript": "^5.7.2",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
 }

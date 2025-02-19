@@ -1,0 +1,18 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+client/**
+# 保留 client/dist 目录
+!client/dist
+!client/dist/**
+
+pnpm-lock.yaml
+pnpm-workspace.yaml
