@@ -1,0 +1,20 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>vite-react-nest</title>
+    {{#if config.pageSpyHost}}
+      {{> pagespy}}
+    {{/if}}
+    {{#if config.chiiUrl}}
+      {{> chii}}
+    {{/if}}
+    {{{insertData}}}
+    {{{cssAssets}}}
+  </head>
+  <body>
+    <div id='root'></div>
+    {{{jsAssets}}}
+  </body>
+</html>

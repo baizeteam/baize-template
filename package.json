@@ -2,11 +2,47 @@
   "name": "baize-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cd client && npm run dev",
+    "server": "cd server && cross-env JSON_ENV=fat START_ENV=dev CONFIG_ENV=test npm run server",
+    "build": "pnpm run server-build && pnpm run client-build",
+    "client-build": "cd client && pnpm run build",
+    "server-build": "cd server && pnpm run build",
+    "prod": "cd server && npm run start",
+    "start": "esno start.ts",
+    "prepare": "husky install",
+    "clear": "cd server && rm -rf ./dist/build/*.map"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
+    "chalk": "^5.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "husky": "^9.1.7",
+    "inquirer": "^12.4.2",
+    "lint-staged": "^15.4.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.1",
+    "typescript": "^5.7.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "client/**/*.{ts,tsx,js,jsx}": [
+      "eslint"
+    ]
+  },
+  "dependencies": {
+    "esno": "^4.8.0"
+  }
 }
