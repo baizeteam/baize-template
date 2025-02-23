@@ -1,0 +1,11 @@
+# dependencies
+/node_modules
+/dist
+
+# production
+/baize-chrome-tool
+baize-chrome-tool.zip
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
