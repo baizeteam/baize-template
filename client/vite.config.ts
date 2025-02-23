@@ -1,11 +1,21 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import reactStylename from '@banshan-alec/vite-plugin-react-stylename';
+import vue from '@vitejs/plugin-vue';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 // import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), reactStylename()],
+  plugins: [
+    vue(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
   base: './', // 设置打包路径
   css: {
     preprocessorOptions: {

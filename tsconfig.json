@@ -9,6 +9,10 @@
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": false,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noFallthroughCasesInSwitch": false,
+		"noUncheckedSideEffectImports": false
 	},
 	"include": [
 		"src/**/*" // 只包括根目录下的 src 目录
