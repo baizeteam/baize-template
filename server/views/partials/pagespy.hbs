@@ -1,0 +1,21 @@
+
+<script crossorigin="anonymous" src="http://{{{config.pageSpyHost}}}/page-spy/index.min.js"></script>
+<script crossorigin="anonymous" src="http://{{{config.pageSpyHost}}}/plugin/data-harbor/index.min.js"></script>
+<script crossorigin="anonymous" src="http://{{{config.pageSpyHost}}}/plugin/rrweb/index.min.js"></script>
+
+  <script>
+  window.$harbor = new DataHarborPlugin();
+  window.$rrweb = new RRWebPlugin();
+
+  [window.$harbor, window.$rrweb].forEach(p => {
+    PageSpy.registerPlugin(p)
+  })
+
+  window.$pageSpy = new PageSpy({
+    api: "{{{config.pageSpyHost}}}",
+    clientOrigin: "http://{{{config.pageSpyHost}}}",
+    project: "{{{config.packageName}}}",
+    autoRender: true,
+    title: "PageSpy 🤝 {{{config.packageName}}}",
+  });
+</script>
