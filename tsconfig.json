@@ -28,6 +28,6 @@
       "@utils/*": ["./src/utils/*"],
     }
   },
-  "include": ["src", "plugin/*"],
+  "include": ["src", "plugin/*","auto-imports.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

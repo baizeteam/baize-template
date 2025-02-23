@@ -2,8 +2,8 @@ import {
   InterceptConfig,
   defaultConfig,
   getChromeLocalInterceptConfig,
-} from '../../utils/hepler';
-import { DEFAUTL_NAME } from '@/utils/hepler';
+} from "../../utils/hepler";
+import { DEFAUTL_NAME } from "@/utils/hepler";
 
 class Background {
   currentConfig: InterceptConfig = defaultConfig;
@@ -26,7 +26,7 @@ class Background {
     try {
       chrome.runtime?.onMessage?.addListener(
         ({ from, action, data }, sender, sendResponse) => {
-          if (from === 'popup' && action === `${DEFAUTL_NAME}_config_change`) {
+          if (from === "popup" && action === `${DEFAUTL_NAME}_config_change`) {
             const config: InterceptConfig = data;
             this.currentConfig = config;
             sendResponse();
@@ -36,10 +36,10 @@ class Background {
 
       chrome.tabs?.onUpdated?.addListener((tabId, changeInfo) => {
         console.log(tabId, changeInfo);
-        if (changeInfo.status === 'complete') {
+        if (changeInfo.status === "complete") {
           chrome.tabs.sendMessage(tabId, {
             action: `${DEFAUTL_NAME}_url_change`,
-            from: 'background',
+            from: "background",
           });
         }
       });
@@ -49,21 +49,21 @@ class Background {
   }
 
   initContentScriptReload() {
-    const eventSource = new EventSource('http://localhost:3000/reload');
+    const eventSource = new EventSource("http://localhost:3000/reload");
 
-    eventSource.addEventListener('reload', async () => {
-      console.log('reload');
+    eventSource.addEventListener("reload", async () => {
+      console.log("reload");
       chrome?.tabs?.query({ active: true, currentWindow: true }, ([tab]) => {
-        if (!tab || tab.url.indexOf('chrome') === 0) return;
+        if (!tab || tab.url.indexOf("chrome") === 0) return;
 
         // 给当前页面发送刷新信号
         const actionName = `${DEFAUTL_NAME}_reload`;
-        const message = { from: 'background', action: actionName };
+        const message = { from: "background", action: actionName };
         chrome.tabs.sendMessage(tab.id, message, ({ from, action }) => {
           // contentScript响应回调
           // 确定页面接收到reload信号后，重启插件，加载最新代码
-          if (from === 'contentScript' && action === actionName) {
-            console.log('background reload');
+          if (from === "contentScript" && action === actionName) {
+            console.log("background reload");
             // eventSource.close();
             // chrome.runtime.reload();
           }
