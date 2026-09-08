@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'fs';
 function readFileSafely(filePath) {
   try {
     return readFileSync(filePath, 'utf-8');
-  } catch (error) {
+  } catch {
     // 如果发生异常，返回 null
     return null;
   }

@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 80,
+  "ignorePatterns": ["*.es.js", ".vscode/**", ".DS_Store", "*.hbs"]
+}

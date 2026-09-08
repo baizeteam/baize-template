@@ -1,4 +1,9 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { GlobalModule } from './modules/global/global.module';
 import { RenderModule } from '@render/render.module';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -40,6 +45,11 @@ import 'winston-daily-rotate-file';
 // export class AppModule {}
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    const devStaticPath = global.baseConfig.devStaticBase.replace(
+      /^\/+|\/+$/g,
+      '',
+    );
+
     consumer
       .apply(
         createProxyMiddleware({
@@ -52,6 +62,9 @@ export class AppModule implements NestModule {
           ws: true,
         }),
       )
-      .forRoutes(`${global.baseConfig.devStaticBase}`);
+      .forRoutes({
+        path: `${devStaticPath}/{*splat}`,
+        method: RequestMethod.ALL,
+      });
   }
 }

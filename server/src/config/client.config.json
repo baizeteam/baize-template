@@ -1,0 +1,10 @@
+{
+  "devStaticBase": "/client/static/",
+  "clientServerPort": 6688,
+  "nestServerPort": 6689,
+  "isUseCDN": false,
+  "assetsBaseUrl": {
+    "development": "/client/static/",
+    "production": "/dist/build/"
+  }
+}

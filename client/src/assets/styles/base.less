@@ -85,7 +85,7 @@ summary {
   font-weight: normal;
   vertical-align: baseline;
   background: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei";
+  font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei';
 }
 
 article,
@@ -155,7 +155,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -212,13 +212,13 @@ pre {
   word-wrap: break-word; /* IE */
 }
 
-input[type="radio"] {
+input[type='radio'] {
   vertical-align: text-bottom;
 }
-input[type="checkbox"] {
+input[type='checkbox'] {
   vertical-align: bottom;
 }
-.ie7 input[type="checkbox"] {
+.ie7 input[type='checkbox'] {
   vertical-align: baseline;
 }
 .ie6 input {
@@ -274,9 +274,9 @@ samp {
 /* hand cursor on clickable elements */
 .clickable,
 label,
-input[type="button"],
-input[type="submit"],
-input[type="file"],
+input[type='button'],
+input[type='submit'],
+input[type='file'],
 button {
   cursor: pointer;
 }
@@ -291,7 +291,7 @@ textarea {
 
 /* make buttons play nice in IE */
 button,
-input[type="button"] {
+input[type='button'] {
   width: auto;
   overflow: visible;
 }
@@ -309,7 +309,7 @@ input[type="button"] {
 /* let's clear some floats */
 .clearfix:before,
 .clearfix:after {
-  content: "\0020";
+  content: '\0020';
   display: block;
   height: 0;
   overflow: hidden;
@@ -324,7 +324,9 @@ input[type="button"] {
 /* reset font family */
 html,
 body {
-  font-family: Microsoft Yahei, sans-serif;
+  font-family:
+    Microsoft Yahei,
+    sans-serif;
 }
 button {
   font-family: inherit;

@@ -5,7 +5,7 @@ const htmlPath = 'src/site/index/index.html';
 
 @Controller()
 export class RenderIndexController {
-  @Get('*')
+  @Get('{*splat}')
   @Render('index')
   async root(@Res() res: Response) {
     const _configData = {

@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-
 export async function getJsAssets(entryHtml) {
   // 开发环境
   if (process.env.START_ENV === 'dev') {

@@ -1,7 +1,7 @@
 {
   "name": "client",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
@@ -9,35 +9,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/v5-patch-for-react-19": "^1.0.3",
-    "@sentry/react": "^9.1.0",
-    "antd": "^5.24.1",
-    "axios": "^1.7.9",
-    "dayjs": "^1.11.13",
-    "js-cookie": "^3.0.5",
-    "mobx": "^6.13.6",
-    "mobx-react": "^9.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.5",
-    "vite": "^6.1.0"
+    "@sentry/react": "^10.73.0",
+    "antd": "^6.6.3",
+    "axios": "^1.20.0",
+    "dayjs": "^1.11.23",
+    "js-cookie": "^3.0.8",
+    "mobx": "^7.0.3",
+    "mobx-react": "^10.0.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3",
+    "vite": "^8.2.2"
   },
   "devDependencies": {
-    "@banshan-alec/vite-plugin-react-stylename": "^1.0.3",
-    "@sentry/vite-plugin": "3.1.2",
+    "@sentry/vite-plugin": "^5.4.0",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.13.4",
-    "@types/react": "^19.0.10",
-    "@types/react-css-modules": "^4.6.8",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.20",
-    "code-inspector-plugin": "^0.20.0",
-    "cross-env": "^7.0.3",
-    "less": "^4.2.2",
-    "postcss-less": "^6.0.0",
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.5.5",
+    "code-inspector-plugin": "^2.0.8",
+    "cross-env": "^10.1.0",
+    "less": "^4.9.1",
     "ppanel": "^0.0.1",
-    "typescript": "^5.7.3",
-    "vite-plugin-imp": "^2.4.0"
+    "typescript": "^7.0.2"
   }
 }

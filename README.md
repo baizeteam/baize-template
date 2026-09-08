@@ -8,7 +8,7 @@
 - 支持多入口打包
 - 支持 mockjs
 - 支持企微机器人上报
-- 支持 styleName
+- 支持 CSS Modules
 - 支持日志系统（默认存储近 30d）
 - 支持用户登录校验中间件
 - vite 已配置默认 chunk 分包策略

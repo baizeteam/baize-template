@@ -1,6 +1,6 @@
 import React from 'react';
-import './index.module.less';
+import styles from './index.module.less';
 
 export default function TestComponent() {
-  return <div styleName="test-component">TestComponent</div>;
+  return <div className={styles['test-component']}>TestComponent</div>;
 }

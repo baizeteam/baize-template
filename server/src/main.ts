@@ -11,8 +11,11 @@ async function bootstrap() {
   await initBaseConfig();
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['error', 'warn'], // 只显示 error 和 warn 级别的日志
+    routeResolutionStrategy: 'specificity',
   });
-  app.useStaticAssets(join(global.baseConfig.clientBuildPath));
+  app.useStaticAssets(join(global.baseConfig.clientBuildPath), {
+    prefix: global.baseConfig.assetsBaseUrl.production,
+  });
   app.useStaticAssets(join(__dirname, '../', 'public'));
   app.setBaseViewsDir(join(__dirname, '../', 'views'));
   app.setViewEngine('hbs');

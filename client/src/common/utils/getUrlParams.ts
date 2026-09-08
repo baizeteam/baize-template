@@ -1,6 +1,6 @@
 export function getUrlParams(
   name: string,
-  search = window.location.search.substring(1)
+  search = window.location.search.substring(1),
 ) {
   const searchParams = new URLSearchParams(search);
   // const reg = new RegExp(`${name}=([^&]+)+(&|$)`);
@@ -11,7 +11,7 @@ export function getUrlParams(
 
 // 获取url中的参数
 export const getAllUrlParams = (
-  search: string = window.location.search
+  search: string = window.location.search,
 ): { [id: string]: string } => {
   let arr = [];
   let result = decodeURIComponent(search);

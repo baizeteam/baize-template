@@ -12,7 +12,7 @@ export default function vitePluginCdnUpload(chunkKey = ''): Plugin {
       const assetPath = path.resolve(
         process.cwd(),
         resolvedConfig.build.outDir,
-        'asset.json'
+        'asset.json',
       );
       try {
         fs.statSync(assetPath);
@@ -21,11 +21,11 @@ export default function vitePluginCdnUpload(chunkKey = ''): Plugin {
             path.resolve(
               process.cwd(),
               resolvedConfig.build.outDir,
-              'asset.json'
-            )
+              'asset.json',
+            ),
           )
           .toString();
-      } catch (error) {
+      } catch {
         originBundle = '{}';
       }
     },

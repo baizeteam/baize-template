@@ -12,7 +12,7 @@ export class WxbotService {
   sendWxMessage(data, key = global.baseConfig.wxBotKey) {
     axios
       .post(this.baseUrl + key, data)
-      .then((response) => {
+      .then((_response) => {
         console.log('发送成功');
       })
       .catch((error) => {

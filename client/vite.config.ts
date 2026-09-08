@@ -1,20 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve, join } from 'path';
-import {
-  clientServerPort,
-  clientBuildPath,
-  assetsBaseUrl,
-  isDev,
-} from '../server/clientConfig.js';
-import assetsJsonPlugin from './vite-plugin/vite-plugin-assets-json';
-import reactStylename from '@banshan-alec/vite-plugin-react-stylename';
+import { resolve } from 'path';
+import clientConfig from '../server/src/config/client.config.json' with { type: 'json' };
+import assetsJsonPlugin from './vite-plugin/vite-plugin-assets-json.ts';
 import autoprefixer from 'autoprefixer';
 import childProcess from 'child_process';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
 
+const { clientServerPort, assetsBaseUrl } = clientConfig;
+const clientBuildPath = resolve(import.meta.dirname, '../server/dist/build');
+const isDev = process.env.NODE_ENV === 'development';
 const baseUrl = assetsBaseUrl[process.env.NODE_ENV];
+const shouldUploadSourcemaps = Boolean(
+  !isDev &&
+  process.env.SENTRY_AUTH_TOKEN &&
+  process.env.SENTRY_ORG &&
+  process.env.SENTRY_PROJECT,
+);
 
 function generateSentryRelease() {
   try {
@@ -22,7 +25,7 @@ function generateSentryRelease() {
     const versionBuffer = childProcess.execSync('git rev-parse --short HEAD');
     const sentryRelease = 'sentry' + versionBuffer.toString().trim();
     return sentryRelease;
-  } catch (error) {
+  } catch {
     console.error('获取commit hash失败');
     return null;
   }
@@ -37,32 +40,30 @@ export default defineConfig({
   },
   base: baseUrl,
   plugins: [
-    react(),
-    // 开发环境不执行 sentryVitePlugin
-    !isDev &&
-      sentryVitePlugin({
-        include: '../server/dist/build/',
-        release: generateSentryRelease(),
-        url: '你的sentry地址',
-        org: '你的sentry组织',
-        // sentry 项目名称
-        project: '你的sentry项目',
-        // sentry 认证 token
-        authToken: '你的sentry认证token',
-      }),
     isDev &&
       codeInspectorPlugin({
         bundler: 'vite',
       }),
-    reactStylename(),
+    react(),
+    // 开发环境不执行 sentryVitePlugin
+    shouldUploadSourcemaps &&
+      sentryVitePlugin({
+        url: process.env.SENTRY_URL,
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        release: {
+          name: generateSentryRelease() ?? undefined,
+        },
+      }),
     assetsJsonPlugin(),
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
-      '@common': resolve(__dirname, './src/common'),
-      '@index': resolve(__dirname, './src/site/index'),
-      '@mobile': resolve(__dirname, './src/site/mobile'),
+      '@': resolve(import.meta.dirname, './src'),
+      '@common': resolve(import.meta.dirname, './src/common'),
+      '@index': resolve(import.meta.dirname, './src/site/index'),
+      '@mobile': resolve(import.meta.dirname, './src/site/mobile'),
     },
   },
   css: {
@@ -93,22 +94,25 @@ export default defineConfig({
     assetsDir: './',
     rollupOptions: {
       input: [
-        resolve(__dirname, './src/site/index/index.html'),
-        resolve(__dirname, './src/site/mobile/index.html'),
+        resolve(import.meta.dirname, './src/site/index/index.html'),
+        resolve(import.meta.dirname, './src/site/mobile/index.html'),
       ],
       output: {
-        manualChunks: {
-          // 将项目基础库打包成单独的 chunk 中
-          base: [
-            'react',
-            'react-dom',
-            'react-router-dom',
-            'axios',
-            'mobx',
-            'mobx-react',
+        codeSplitting: {
+          groups: [
+            {
+              // 将项目基础库打包成单独的 chunk 中
+              name: 'base',
+              test: /node_modules[\\/](react(?:-dom|-router-dom)?|axios|mobx(?:-react)?)[\\/]/,
+              priority: 20,
+            },
+            {
+              // 将组件库的代码打包
+              name: 'antd',
+              test: /node_modules[\\/]antd[\\/]/,
+              priority: 10,
+            },
           ],
-          // 将组件库的代码打包
-          antd: ['antd'],
         },
       },
     },

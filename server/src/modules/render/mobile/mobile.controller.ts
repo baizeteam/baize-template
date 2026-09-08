@@ -5,7 +5,7 @@ const htmlPath = 'src/site/mobile/index.html';
 
 @Controller()
 export class RenderMobileController {
-  @Get('mobile?*')
+  @Get(['mobile', 'mobile/*splat'])
   @Render('mobile')
   async root(@Res() res: Response) {
     const _configData = {
