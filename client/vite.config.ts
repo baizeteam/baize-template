@@ -1,33 +1,33 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
-import clientConfig from "../server/src/config/client.config.json" with { type: "json" };
-import assetsJsonPlugin from "./vite-plugin/vite-plugin-assets-json";
-import autoprefixer from "autoprefixer";
-import childProcess from "child_process";
-import { sentryVitePlugin } from "@sentry/vite-plugin";
-import { codeInspectorPlugin } from "code-inspector-plugin";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+import clientConfig from '../server/src/config/client.config.json' with { type: 'json' };
+import assetsJsonPlugin from './vite-plugin/vite-plugin-assets-json';
+import autoprefixer from 'autoprefixer';
+import childProcess from 'child_process';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 
 const { clientServerPort, assetsBaseUrl } = clientConfig;
-const clientBuildPath = resolve(import.meta.dirname, "../server/dist/build");
-const isDev = process.env.NODE_ENV === "development";
+const clientBuildPath = resolve(import.meta.dirname, '../server/dist/build');
+const isDev = process.env.NODE_ENV === 'development';
 const baseUrl =
   assetsBaseUrl[process.env.NODE_ENV as keyof typeof assetsBaseUrl];
 const shouldUploadSourcemaps = Boolean(
   !isDev &&
-    process.env.SENTRY_AUTH_TOKEN &&
-    process.env.SENTRY_ORG &&
-    process.env.SENTRY_PROJECT,
+  process.env.SENTRY_AUTH_TOKEN &&
+  process.env.SENTRY_ORG &&
+  process.env.SENTRY_PROJECT,
 );
 
 function generateSentryRelease() {
   try {
     // 获取commit hash
-    const versionBuffer = childProcess.execSync("git rev-parse --short HEAD");
-    const sentryRelease = "sentry" + versionBuffer.toString().trim();
+    const versionBuffer = childProcess.execSync('git rev-parse --short HEAD');
+    const sentryRelease = 'sentry' + versionBuffer.toString().trim();
     return sentryRelease;
   } catch {
-    console.error("获取commit hash失败");
+    console.error('获取commit hash失败');
     return null;
   }
 }
@@ -43,7 +43,7 @@ export default defineConfig({
   plugins: [
     isDev &&
       codeInspectorPlugin({
-        bundler: "vite",
+        bundler: 'vite',
       }),
     react(),
     // 开发环境不执行 sentryVitePlugin
@@ -61,15 +61,15 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": resolve(import.meta.dirname, "./src"),
-      "@common": resolve(import.meta.dirname, "./src/common"),
-      "@index": resolve(import.meta.dirname, "./src/site/index"),
-      "@mobile": resolve(import.meta.dirname, "./src/site/mobile"),
+      '@': resolve(import.meta.dirname, './src'),
+      '@common': resolve(import.meta.dirname, './src/common'),
+      '@index': resolve(import.meta.dirname, './src/site/index'),
+      '@mobile': resolve(import.meta.dirname, './src/site/mobile'),
     },
   },
   css: {
     postcss: {
-      plugins: [autoprefixer() as import("postcss").AcceptedPlugin],
+      plugins: [autoprefixer() as import('postcss').AcceptedPlugin],
     },
     preprocessorOptions: {
       less: {
@@ -81,35 +81,35 @@ export default defineConfig({
   server: {
     port: clientServerPort,
     strictPort: true,
-    host: "127.0.0.1",
+    host: '127.0.0.1',
     hmr: {
-      protocol: "ws",
-      host: "127.0.0.1",
+      protocol: 'ws',
+      host: '127.0.0.1',
       clientPort: clientServerPort,
     },
   },
   build: {
-    sourcemap: "hidden",
+    sourcemap: 'hidden',
     outDir: clientBuildPath,
     emptyOutDir: true,
-    assetsDir: "./",
+    assetsDir: './',
     rollupOptions: {
       input: [
-        resolve(import.meta.dirname, "./src/site/index/index.html"),
-        resolve(import.meta.dirname, "./src/site/mobile/index.html"),
+        resolve(import.meta.dirname, './src/site/index/index.html'),
+        resolve(import.meta.dirname, './src/site/mobile/index.html'),
       ],
       output: {
         codeSplitting: {
           groups: [
             {
               // 将项目基础库打包成单独的 chunk 中
-              name: "base",
+              name: 'base',
               test: /node_modules[\\/](react(?:-dom|-router-dom)?|axios|mobx(?:-react)?)[\\/]/,
               priority: 20,
             },
             {
               // 将组件库的代码打包
-              name: "antd",
+              name: 'antd',
               test: /node_modules[\\/]antd[\\/]/,
               priority: 10,
             },

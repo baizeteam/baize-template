@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
-import { exec } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+import { exec } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 function readFileSafely(filePath) {
   try {

@@ -1,0 +1,16 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - name: oxlint
+      glob:
+        - 'client/*.{js,jsx,ts,tsx}'
+        - 'client/**/*.{js,jsx,ts,tsx}'
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true
+
+    - name: oxfmt
+      glob:
+        - 'client/*.{js,jsx,ts,tsx}'
+        - 'client/**/*.{js,jsx,ts,tsx}'
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
